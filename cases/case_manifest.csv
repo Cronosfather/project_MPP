@@ -1,0 +1,7 @@
+case,path,h_over_L,mesh,status
+steady2d_h_0p3_medium,cases\steady2d_h_0p3_medium,0.3,medium,configured
+steady2d_h_0p2_medium,cases\steady2d_h_0p2_medium,0.2,medium,configured
+steady2d_h_0p15_medium,cases\steady2d_h_0p15_medium,0.15,medium,configured
+steady2d_h_0p1_medium,cases\steady2d_h_0p1_medium,0.1,medium,configured
+steady2d_h_0p075_medium,cases\steady2d_h_0p075_medium,0.075,medium,configured
+steady2d_h_0p05_medium,cases\steady2d_h_0p05_medium,0.05,medium,configured

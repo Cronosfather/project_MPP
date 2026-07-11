@@ -1,0 +1,14 @@
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+cases/**/mesh.su2
+cases/**/history*.csv
+cases/**/restart*
+cases/**/flow*.vtu
+cases/**/surface*.csv
+cases/**/su2.log
+results/*.csv
+results/*.png
+!cases/.gitkeep
+!results/.gitkeep

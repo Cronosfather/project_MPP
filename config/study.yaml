@@ -1,0 +1,24 @@
+project: MPP
+reference:
+  length_m: 1.0
+  width_m: 1.0
+  area_2d_m2: 1.0
+flow:
+  velocity_mps: 40.0
+  density_kgm3: 1.225
+  viscosity_pas: 1.789e-5
+geometry:
+  domain_inlet_x_over_L: -4.0
+  domain_outlet_x_over_L: 6.0
+  domain_top_z_over_L: 3.0
+  floor_length_over_L: 1.0
+  thickness_over_L: 0.04
+steady_2d:
+  heights_over_L: [0.30, 0.20, 0.15, 0.10, 0.075, 0.05]
+  mesh_levels:
+    medium: 0.025
+solver:
+  max_iterations: 2000
+  convergence_field: RMS_DENSITY
+  convergence_minval: -8
+
