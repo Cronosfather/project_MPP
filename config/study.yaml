@@ -13,12 +13,20 @@ geometry:
   domain_top_z_over_L: 3.0
   floor_length_over_L: 1.0
   thickness_over_L: 0.04
+  inlet_clearance_over_L: 0.16
+  diffuser_exit_clearance_over_L: 0.20
+  throat_x_over_L: 0.45
+  diffuser_start_x_over_L: 0.55
+  first_layer_height_over_L: 2.0e-5
+  boundary_layer_thickness_over_L: 0.012
+  boundary_layer_growth: 1.18
 steady_2d:
   heights_over_L: [0.30, 0.20, 0.15, 0.10, 0.075, 0.05]
   mesh_levels:
+    coarse: 0.04
     medium: 0.025
+    fine: 0.015
 solver:
   max_iterations: 2000
   convergence_field: RMS_DENSITY
   convergence_minval: -8
-

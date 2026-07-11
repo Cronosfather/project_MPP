@@ -8,6 +8,7 @@ cases/**/restart*
 cases/**/flow*.vtu
 cases/**/surface*.csv
 cases/**/su2.log
+cases/**/gmsh.log
 results/*.csv
 results/*.png
 !cases/.gitkeep

@@ -38,12 +38,14 @@ python -m pip install -r requirements.txt
 
 ```powershell
 python scripts/setup_cases.py --study config/study.yaml
+python scripts/check_geometry.py
 ```
 
 Gmsh와 SU2 실행 파일이 PATH에 있을 때 계산을 순차 실행한다.
 
 ```powershell
-python scripts/run_cases.py --manifest cases/case_manifest.csv --mesh --solve
+python scripts/run_cases.py --manifest cases/case_manifest.csv --mesh --case steady2d_h_0p1_medium
+python scripts/run_cases.py --manifest cases/case_manifest.csv --solve --case steady2d_h_0p1_medium
 ```
 
 계산 완료 후 결과를 모은다.
@@ -55,9 +57,8 @@ python scripts/postprocess_cases.py --manifest cases/case_manifest.csv
 ## 현재 상태
 
 - 연구 범위, 부호 규약, 무차원 변수 정의 완료
-- 2차원 정상 RANS 케이스 생성 및 실행 인터페이스 구축
-- 정상해석용 Gmsh/SU2 템플릿 초안 구축
-- 다음 단계: 기준 격자 생성 검증, SU2 버전별 설정 확인, 지상고 스윕 실행
+- 2차원 벤투리 수축부–목–디퓨저 형상과 물리 경계 태그 구축
+- 3수준 격자 및 정상 RANS 케이스 생성·실행 인터페이스 구축
+- 다음 단계: Gmsh 설치 환경에서 기준 격자 품질 검증, SU2 버전별 설정 확인
 
 자세한 실행 순서는 [연구계획](docs/research_plan.md)과 [검증 절차](docs/verification_plan.md)를 따른다.
-

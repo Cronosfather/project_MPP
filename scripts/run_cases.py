@@ -1,6 +1,6 @@
 """Run Gmsh and SU2 for manifest cases."""
 from __future__ import annotations
-import argparse, csv, shutil, subprocess
+import argparse, csv, importlib.util, shutil, subprocess, sys
 from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -13,14 +13,17 @@ def main() -> None:
     p.add_argument("--mesh", action="store_true"); p.add_argument("--solve", action="store_true"); p.add_argument("--case")
     a=p.parse_args()
     if not a.mesh and not a.solve: p.error("select --mesh and/or --solve")
-    if a.mesh and not shutil.which("gmsh"): raise SystemExit("gmsh executable not found in PATH")
+    gmsh_exe=shutil.which("gmsh")
+    if a.mesh and not gmsh_exe and importlib.util.find_spec("gmsh") is None:
+        raise SystemExit("neither gmsh executable nor Python gmsh package was found")
     if a.solve and not shutil.which("SU2_CFD"): raise SystemExit("SU2_CFD executable not found in PATH")
     with a.manifest.open(encoding="utf-8") as stream: rows=list(csv.DictReader(stream))
     for row in rows:
         if a.case and row["case"] != a.case: continue
         folder=ROOT/row["path"]
-        if a.mesh: execute(["gmsh","geometry.geo","-2","-format","su2","-o","mesh.su2"],folder,"gmsh.log")
+        if a.mesh:
+            command=[gmsh_exe,"geometry.geo","-2","-format","su2","-o","mesh.su2"] if gmsh_exe else [sys.executable,str(ROOT/"scripts/generate_mesh.py"),"geometry.geo","mesh.su2"]
+            execute(command,folder,"gmsh.log")
         if a.solve: execute(["SU2_CFD","config.cfg"],folder,"su2.log")
         print(f"completed: {row['case']}")
 if __name__ == "__main__": main()
-
