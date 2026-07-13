@@ -23,3 +23,9 @@
 `surface.vtu`에서 205개 하부 표면점을 추출했다. 현재 예비 범위는 `Cp_min=-2.992`, `Cp_max=-0.188`, 최대 skin-friction 계수 크기 약 0.0248이다. 위치별 데이터는 `scripts/postprocess_underfloor.py`가 CSV로 생성한다.
 
 SU2 8.5는 현재 케이스에서 `Y_Plus`를 좌표보다 짧은 희소 배열로 기록했다(187 values, 205 coordinates). 잘못된 좌표 매핑을 피하기 위해 y+는 자동 분석에서 제외했다. 별도의 벽거리 기반 계산 또는 검증된 출력 방법을 마련하기 전까지 y+ 조건은 미검증 상태다.
+
+## h/L=0.20 예비 표면장
+
+2,000회 2차 정확도 계산의 마지막 restart에서 1-step 진단 출력을 생성했다. `body_lower`의 205개 점에서 `Cp_min=-3.907`, `Cp_max=-0.219`, 최대 skin-friction 계수 크기 약 0.0290을 얻었다. 전체 힘의 마지막 값은 `CL=-0.86848`, 하부 경계 기여는 `CL=-0.95770`이다. 다만 원래 계산이 정상 수렴 기준을 통과하지 못했으므로 이 분포 역시 provisional snapshot이다.
+
+SU2 appended-binary VTU에는 부가 배열이 희소하거나 파일 전체 판독기가 거부하는 경우가 있었다. 후처리기는 좌표, `Pressure_Coefficient`, `Skin_Friction_Coefficient` 블록을 각 offset에서 직접 읽고 길이를 독립 검증하도록 변경했다. 따라서 손상된 부가 배열을 핵심 표면 데이터에 잘못 매핑하지 않는다.
