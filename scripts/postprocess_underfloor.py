@@ -47,11 +47,15 @@ def extract(vtu: Path, output: Path) -> dict:
     frame=frame.sort_values("x").drop_duplicates(subset=["x","z"]).reset_index(drop=True)
     output.parent.mkdir(parents=True,exist_ok=True); frame.to_csv(output,index=False)
     yplus=np.asarray(pdata.get("Y_Plus",[])).reshape(-1)
-    return {"source":str(vtu),"output":str(output),"points":len(frame),
+    result={"source":str(vtu),"output":str(output),"points":len(frame),
         "cp_min":float(frame.cp.min()),"cp_max":float(frame.cp.max()),
         "cf_max":float(frame.cf_magnitude.max()),
         "y_plus_status":"available" if len(yplus)==len(points) else "unmapped_sparse_array",
         "y_plus_values":int(len(yplus)),"coordinate_points":int(len(points))}
+    if len(yplus)==len(points):
+        result.update({"y_plus_min":float(yplus.min()),"y_plus_mean":float(yplus.mean()),
+            "y_plus_max":float(yplus.max())})
+    return result
 
 def main() -> None:
     p=argparse.ArgumentParser(); p.add_argument("case"); p.add_argument("--output",type=Path); a=p.parse_args()

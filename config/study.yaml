@@ -21,7 +21,7 @@ geometry:
   boundary_layer_thickness_over_L: 0.012
   boundary_layer_growth: 1.18
 steady_2d:
-  heights_over_L: [0.30, 0.20, 0.15, 0.10, 0.075, 0.05]
+  heights_over_L: [0.30, 0.20, 0.15, 0.125, 0.10, 0.075, 0.05]
   mesh_levels:
     coarse: 0.04
     medium: 0.025
