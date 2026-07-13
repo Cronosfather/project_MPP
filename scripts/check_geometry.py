@@ -16,6 +16,8 @@ def validate_study(path: Path) -> list[str]:
         errors.append("minimum clearance is too small relative to first layer height")
     if g["domain_inlet_x_over_L"] >= 0 or g["domain_outlet_x_over_L"] <= 1:
         errors.append("outer domain does not enclose the body")
+    if g["inlet_clearance_delta_over_L"] <= 0 or g["diffuser_exit_clearance_delta_over_L"] <= 0:
+        errors.append("Venturi inlet and exit clearances must remain above the throat")
     return errors
 
 def validate_cases(manifest: Path) -> list[str]:

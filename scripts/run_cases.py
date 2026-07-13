@@ -16,7 +16,10 @@ def main() -> None:
     gmsh_exe=shutil.which("gmsh")
     if a.mesh and not gmsh_exe and importlib.util.find_spec("gmsh") is None:
         raise SystemExit("neither gmsh executable nor Python gmsh package was found")
-    if a.solve and not shutil.which("SU2_CFD"): raise SystemExit("SU2_CFD executable not found in PATH")
+    su2_exe=shutil.which("SU2_CFD")
+    local_su2=ROOT/"tools/su2-8.5.0/runtime/bin/SU2_CFD.exe"
+    if not su2_exe and local_su2.exists(): su2_exe=str(local_su2)
+    if a.solve and not su2_exe: raise SystemExit("SU2_CFD executable not found in PATH or tools/su2-8.5.0")
     with a.manifest.open(encoding="utf-8") as stream: rows=list(csv.DictReader(stream))
     for row in rows:
         if a.case and row["case"] != a.case: continue
@@ -24,6 +27,6 @@ def main() -> None:
         if a.mesh:
             command=[gmsh_exe,"geometry.geo","-2","-format","su2","-o","mesh.su2"] if gmsh_exe else [sys.executable,str(ROOT/"scripts/generate_mesh.py"),"geometry.geo","mesh.su2"]
             execute(command,folder,"gmsh.log")
-        if a.solve: execute(["SU2_CFD","config.cfg"],folder,"su2.log")
+        if a.solve: execute([su2_exe,"config.cfg"],folder,"su2.log")
         print(f"completed: {row['case']}")
 if __name__ == "__main__": main()

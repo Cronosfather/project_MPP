@@ -28,7 +28,7 @@ tests/                  자동화 코드 단위시험
 
 ## 빠른 시작
 
-요구 사항은 Python 3.10+, Gmsh 4.x, SU2 8.x다. Python 패키지는 다음과 같이 설치한다.
+요구 사항은 Python 3.10+, Gmsh 4.x, SU2 8.x다. 현재 검증 기준 버전은 Gmsh 4.15.2와 SU2 8.5.0이다. Python 패키지는 다음과 같이 설치한다.
 
 ```powershell
 python -m pip install -r requirements.txt
@@ -60,5 +60,7 @@ python scripts/postprocess_cases.py --manifest cases/case_manifest.csv
 - 2차원 벤투리 수축부–목–디퓨저 형상과 물리 경계 태그 구축
 - 3수준 격자 및 정상 RANS 케이스 생성·실행 인터페이스 구축
 - 다음 단계: Gmsh 설치 환경에서 기준 격자 품질 검증, SU2 버전별 설정 확인
+- SU2 8.5.0 기준 `h/L=0.10` 정상 RANS 실행 완료; 2차 정확도 해는 미수렴으로 provisional 판정
+- 다음 단계: `h/L=0.30` 부착유동 기준해석으로 설정과 물리적 비정상성을 분리
 
 자세한 실행 순서는 [연구계획](docs/research_plan.md)과 [검증 절차](docs/verification_plan.md)를 따른다.

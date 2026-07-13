@@ -13,8 +13,8 @@ geometry:
   domain_top_z_over_L: 3.0
   floor_length_over_L: 1.0
   thickness_over_L: 0.04
-  inlet_clearance_over_L: 0.16
-  diffuser_exit_clearance_over_L: 0.20
+  inlet_clearance_delta_over_L: 0.06
+  diffuser_exit_clearance_delta_over_L: 0.10
   throat_x_over_L: 0.45
   diffuser_start_x_over_L: 0.55
   first_layer_height_over_L: 2.0e-5
@@ -28,5 +28,5 @@ steady_2d:
     fine: 0.015
 solver:
   max_iterations: 2000
-  convergence_field: RMS_DENSITY
+  convergence_field: RMS_PRESSURE
   convergence_minval: -8
