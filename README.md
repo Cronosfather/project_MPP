@@ -67,6 +67,7 @@ python scripts/postprocess_underfloor.py steady2d_h_0p3_medium
 - `h/L=0.30` medium은 다음 지상고 선별용 screening 결과 확보
 - `h/L=0.20` medium은 2,000회 2차 정확도에서도 힘이 표류해 provisional 판정
 - `h/L=0.15` medium도 힘이 표류해 provisional 판정; 예비 다운포스 최대 구간은 `0.10 < h/L < 0.15`
-- 다음 단계: `h/L=0.125` 적응형 정상 선별점 추가와 낮은 지상고 고정형상 URANS 준비
+- `h/L=0.125` medium은 multigrid 발산과 정상 힘 비수렴이 재현되어 URANS 우선 조건으로 판정
+- 다음 단계: `h/L=0.125` 고정형상 URANS 설정·시간간격 검증
 
 자세한 실행 순서는 [연구계획](docs/research_plan.md)과 [검증 절차](docs/verification_plan.md)를 따른다.
