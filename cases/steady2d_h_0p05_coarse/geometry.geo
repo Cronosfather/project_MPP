@@ -1,7 +1,7 @@
 // MPP parameterized 2-D Venturi underfloor.
 L = 1.0;
 h = 0.05;
-lc = 0.025;
+lc = 0.04;
 th = 0.04;
 hin = 0.11;
 hout = 0.15000000000000002;

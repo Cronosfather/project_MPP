@@ -28,7 +28,7 @@ tests/                  자동화 코드 단위시험
 
 ## 빠른 시작
 
-요구 사항은 Python 3.10+, Gmsh 4.x, SU2 8.x다. Python 패키지는 다음과 같이 설치한다.
+요구 사항은 Python 3.10+, Gmsh 4.x, SU2 8.x다. 현재 검증 기준 버전은 Gmsh 4.15.2와 SU2 8.5.0이다. Python 패키지는 다음과 같이 설치한다.
 
 ```powershell
 python -m pip install -r requirements.txt
@@ -38,26 +38,36 @@ python -m pip install -r requirements.txt
 
 ```powershell
 python scripts/setup_cases.py --study config/study.yaml
+python scripts/check_geometry.py
 ```
 
 Gmsh와 SU2 실행 파일이 PATH에 있을 때 계산을 순차 실행한다.
 
 ```powershell
-python scripts/run_cases.py --manifest cases/case_manifest.csv --mesh --solve
+python scripts/run_cases.py --manifest cases/case_manifest.csv --mesh --case steady2d_h_0p1_medium
+python scripts/run_cases.py --manifest cases/case_manifest.csv --solve --case steady2d_h_0p1_medium
 ```
 
 계산 완료 후 결과를 모은다.
 
 ```powershell
 python scripts/postprocess_cases.py --manifest cases/case_manifest.csv
+python scripts/postprocess_underfloor.py steady2d_h_0p3_medium
 ```
+
+기존 `history.csv`, `su2.log`, `forces_breakdown.dat`가 있으면 다음 solve 전에 케이스의 `runs/<timestamp>/`로 자동 보관된다. 의도적으로 덮어쓸 때만 `--no-archive`를 사용한다.
 
 ## 현재 상태
 
 - 연구 범위, 부호 규약, 무차원 변수 정의 완료
-- 2차원 정상 RANS 케이스 생성 및 실행 인터페이스 구축
-- 정상해석용 Gmsh/SU2 템플릿 초안 구축
-- 다음 단계: 기준 격자 생성 검증, SU2 버전별 설정 확인, 지상고 스윕 실행
+- 2차원 벤투리 수축부–목–디퓨저 형상과 물리 경계 태그 구축
+- 하부·상부·전단·후단 차체 경계를 분리해 언더플로어 압력 기여를 별도 분석
+- 3수준 격자 및 정상 RANS 케이스 생성·실행 인터페이스 구축
+- SU2 8.5.0 기준 `h/L=0.10` 정상 RANS 실행 완료; 2차 정확도 해는 미수렴으로 provisional 판정
+- `h/L=0.30` medium은 다음 지상고 선별용 screening 결과 확보
+- `h/L=0.20` medium은 2,000회 2차 정확도에서도 힘이 표류해 provisional 판정
+- `h/L=0.15` medium도 힘이 표류해 provisional 판정; 예비 다운포스 최대 구간은 `0.10 < h/L < 0.15`
+- `h/L=0.125` medium은 multigrid 발산과 정상 힘 비수렴이 재현되어 URANS 우선 조건으로 판정
+- 다음 단계: `h/L=0.125` 고정형상 URANS 설정·시간간격 검증
 
 자세한 실행 순서는 [연구계획](docs/research_plan.md)과 [검증 절차](docs/verification_plan.md)를 따른다.
-

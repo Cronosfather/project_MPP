@@ -20,12 +20,23 @@ def generate(study_path: Path) -> list[dict[str, object]]:
     root = ROOT / "cases"; root.mkdir(exist_ok=True)
     rows = []
     length = float(study["reference"]["length_m"])
+    geometry = study["geometry"]
     for mesh, ratio in study["steady_2d"]["mesh_levels"].items():
         for h_ratio in study["steady_2d"]["heights_over_L"]:
             name = case_name(float(h_ratio), mesh); folder = root / name; folder.mkdir(exist_ok=True)
             values = {"length_m": length, "height_m": float(h_ratio)*length,
                 "mesh_size_m": float(ratio)*length,
-                "thickness_m": float(study["geometry"]["thickness_over_L"])*length,
+                "thickness_m": float(geometry["thickness_over_L"])*length,
+                "inlet_clearance_m": (float(h_ratio)+float(geometry["inlet_clearance_delta_over_L"]))*length,
+                "exit_clearance_m": (float(h_ratio)+float(geometry["diffuser_exit_clearance_delta_over_L"]))*length,
+                "throat_x_m": float(geometry["throat_x_over_L"])*length,
+                "diffuser_start_x_m": float(geometry["diffuser_start_x_over_L"])*length,
+                "domain_inlet_x_m": float(geometry["domain_inlet_x_over_L"])*length,
+                "domain_outlet_x_m": float(geometry["domain_outlet_x_over_L"])*length,
+                "domain_top_z_m": float(geometry["domain_top_z_over_L"])*length,
+                "first_layer_height_m": float(geometry["first_layer_height_over_L"])*length,
+                "boundary_layer_thickness_m": float(geometry["boundary_layer_thickness_over_L"])*length,
+                "boundary_layer_growth": float(geometry["boundary_layer_growth"]),
                 "velocity_mps": study["flow"]["velocity_mps"],
                 "density_kgm3": study["flow"]["density_kgm3"],
                 "viscosity_pas": study["flow"]["viscosity_pas"],
