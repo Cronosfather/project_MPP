@@ -42,7 +42,10 @@ Physical Curve("ground") = {1};
 Physical Curve("outlet") = {2};
 Physical Curve("farfield") = {3};
 Physical Curve("inlet") = {4};
-Physical Curve("body") = {10, 11, 12, 13};
+Physical Curve("body_lower") = {10};
+Physical Curve("body_trailing") = {11};
+Physical Curve("body_upper") = {12};
+Physical Curve("body_leading") = {13};
 Physical Surface("fluid") = {30};
 
 // Boundary-layer field on all solid-body curves.

@@ -1,5 +1,5 @@
 from scripts.setup_cases import case_name, render
-from scripts.check_geometry import validate_study
+from scripts.check_geometry import REQUIRED, validate_study
 from scripts.analyze_convergence import analyze
 from pathlib import Path
 import pandas as pd
@@ -12,6 +12,10 @@ def test_render_replaces_values():
 
 def test_study_geometry_relationships():
     assert validate_study(Path("config/study.yaml")) == []
+
+def test_body_boundaries_are_separated():
+    assert {"body_lower", "body_upper", "body_leading", "body_trailing"} <= REQUIRED
+    assert "body" not in REQUIRED
 
 def test_convergence_requires_residual_and_force_stability(tmp_path):
     history=tmp_path/"history.csv"

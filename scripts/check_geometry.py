@@ -4,7 +4,8 @@ import argparse, csv, re
 from pathlib import Path
 import yaml
 ROOT = Path(__file__).resolve().parents[1]
-REQUIRED = {"ground", "inlet", "outlet", "farfield", "body", "fluid"}
+REQUIRED = {"ground", "inlet", "outlet", "farfield", "body_lower", "body_upper",
+            "body_leading", "body_trailing", "fluid"}
 
 def validate_study(path: Path) -> list[str]:
     s = yaml.safe_load(path.read_text(encoding="utf-8")); g=s["geometry"]

@@ -13,6 +13,11 @@ def final_coefficients(folder: Path) -> dict:
     for target, aliases in {"CL":["CL","Lift"],"CD":["CD","Drag"]}.items():
         for alias in aliases:
             if alias in frame.columns: out[target]=float(last[alias]); break
+    for column in frame.columns:
+        if column.startswith(("CL(","CD(")):
+            out[column]=float(last[column])
+    if "CL" in out: out["C_downforce"]=-float(out["CL"])
+    if "CL(body_lower)" in out: out["C_downforce_lower"]=-float(out["CL(body_lower)"])
     return out
 
 def main() -> None:
@@ -22,4 +27,3 @@ def main() -> None:
     results=ROOT/"results"; results.mkdir(exist_ok=True); pd.DataFrame(output).to_csv(results/"steady_summary.csv",index=False)
     print(f"Wrote {results/'steady_summary.csv'}")
 if __name__ == "__main__": main()
-
